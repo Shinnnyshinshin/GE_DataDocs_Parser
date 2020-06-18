@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 ANNOTATION_KEY = "Feature: "
 
 # -> is named Summary
-# Expecation Completeness is missing
+# Expectation Completeness is missing
 FeatureAnnotation = namedtuple("FeatureAnnotation", ["Feature", "Summary", "API_Stability", "Implementation_Completeness", "Unit_Test_Coverage", "Infrastructure_Coverage","Documentation_Completeness","Bug_Risk"])
 AnnotatedNode = namedtuple("AnnotatedNode", ["name", "path", "annotation", "type_", "id"])
 AnnotatedEdge = namedtuple("AnnotatedEdge", ["id_1", "id_2", "annotation"])
@@ -28,18 +28,16 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
 
     nodes = []
     logger.info(f"working through path {path}")
-    #path = os.path.abspath(os.path.expanduser(path))
     path = os.path.abspath(path)
     directory_iter = walk_directory(path) # iterator(filepath of python file, ast object)
 
-    #print(directory_iter)
     for filepath, ast_tree in directory_iter:
         nodes = nodes + walk_tree(filepath, ast_tree)
 
     nodes = [node for node in nodes if node.annotation is not None]
-    print(nodes)
 
-    #feature_types = set([node.annotation.feature_type for node in nodes])
+    feature_types = set([node.annotation.Feature for node in nodes])
+    print(feature_types)
     #for feature_type in feature_types:
     #   if feature_type not in annotation_tree:
     #        annotation_tree[feature_type] = dict()
@@ -51,7 +49,7 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
     #        }
     #        for node in nodes if node.annotation.feature_type == feature_type
     #    ]
-    #return annotation_tree
+    return feature_types
 
 
 
@@ -102,7 +100,7 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
         elif line[0:9] == ANNOTATION_KEY:
             logger.debug("Found annotation")
             in_annotation = True
-        # ALL THE KEYS ARE HANDLED : THE -> is not handled yet
+        # ALL THE KEYS ARE HANDLED : THE -> is handled as "Summary"
         if in_annotation:
             line_fields = line.split(":", 1)
             for key in FeatureAnnotation._fields:
@@ -121,11 +119,3 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
 
     if len(annotation) > 0:
         return FeatureAnnotation(**annotation)
-
-
-#def main():
-#    res = build_annotations("/Users/work/Development/great_expectations")
-
-#if __name__ == "__main__":
-#    logging.basicConfig(filename='will.log', level=logging.WARNING)
-#    main()
