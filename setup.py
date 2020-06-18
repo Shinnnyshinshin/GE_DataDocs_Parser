@@ -1,3 +1,6 @@
+# python setup.py install
+# it will create a console script GE_parse
+
 from setuptools import setup, find_packages
 
 # Parse requirements.txt
@@ -14,7 +17,7 @@ config = {
   "packages": find_packages(exclude=["docs", "tests", "examples"]),
   "name": "DataDocs_Parser",
   'entry_points': {
-    'console_scripts': ['codemap=codemap.cli:main']
+    'console_scripts': ['GE_parse=GE_DataDocs_Parser.cli:main']
   },
 }
 

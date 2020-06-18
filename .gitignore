@@ -1,1 +1,5 @@
 codemap-master/
+DataDocsParse_env/
+build/
+DataDocs_Parser.egg-info/
+dist/

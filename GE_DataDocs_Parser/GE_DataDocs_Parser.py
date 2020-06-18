@@ -123,9 +123,9 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
         return FeatureAnnotation(**annotation)
 
 
-def main():
-    res = build_annotations("/Users/work/Development/great_expectations")
+#def main():
+#    res = build_annotations("/Users/work/Development/great_expectations")
 
-if __name__ == "__main__":
-    logging.basicConfig(filename='will.log', level=logging.WARNING)
-    main()
+#if __name__ == "__main__":
+#    logging.basicConfig(filename='will.log', level=logging.WARNING)
+#    main()
