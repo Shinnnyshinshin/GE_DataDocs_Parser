@@ -4,14 +4,38 @@ from collections import namedtuple
 import re
 from typing import Iterator, Optional, Union, List, Mapping, Tuple, Set
 import logging
+import json
+
 
 logger = logging.getLogger(__name__)
 
 ANNOTATION_KEY = "id:"
 
-# -> is named Summary
-# Expectation Completeness is missing
+MaturityDetails = namedtuple("MaturityDetails", ["api_stability", "implementation_completeness", "unit_test_coverage", "integration_infrastructure_test_coverage", "documentation_completeness", "bug_risk"])
 FeatureAnnotation = namedtuple("FeatureAnnotation", ["id", "title", "icon", "short_description", "description", "how_to_guide_url", "maturity", "maturity_details"])
+
+
+REGEX_STR = ""
+REGEX_STR += "[ ]*id:(.*)[\n]" # 1
+REGEX_STR += "[ ]*title:(.*)[\n]" # 2
+REGEX_STR += "[ ]*icon:(.*)[\n]" # 3
+REGEX_STR += "[ ]*short_description:(.*)[\n]" # 4
+REGEX_STR += "[ ]*description:(.*)[\n]"# 5
+REGEX_STR += "[ ]*how_to_guide_url:(.*)[\n]"# 6
+REGEX_STR += "[ ]*maturity:(.*)[\n]"# 7
+REGEX_STR += "[ ]*maturity_details:(.*)[\n]"# 8
+
+
+
+REGEX_STR += "[ ]*api_stability:(.*)[\n]" #9
+REGEX_STR += "[ ]*implementation_completeness:(.*)[\n]" #10
+REGEX_STR += "[ ]*unit_test_coverage:(.*)[\n]" #11
+REGEX_STR += "[ ]*integration_infrastructure_test_coverage:(.*)[\n]" #12
+REGEX_STR += "[ ]*documentation_completeness:(.*)[\n]" #13
+REGEX_STR += "[ ]*bug_risk:(.*)[\n]" #14
+
+pattern = re.compile(REGEX_STR)
+
 
 """
     id: expectations_store_git
@@ -28,6 +52,34 @@ FeatureAnnotation = namedtuple("FeatureAnnotation", ["id", "title", "icon", "sho
         integration_infrastructure_test_coverage: N/A
         documentation_completeness: Complete
         bug_risk: Low
+
+
+
+
+
+{"id": "expectations_store_s3"
+    title: Expectation Store - S3
+    icon:
+    short_description:
+    description:
+    how_to_guide_url:
+    maturity: Beta
+    maturity_details":{
+        api_stability: Stable
+        implementation_completeness: Complete
+        unit_test_coverage: Complete
+        integration_infrastructure_test_coverage: Minimal
+        documentation_completeness: Complete
+        bug_risk: Low}
+}
+
+# list of dicts [{s3 *****}, {azureblob *****}, {gcs *****}]
+
+if icon is null :
+    https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/{id}.png"
+if not then keep
+
+
 """
 
 
@@ -58,7 +110,7 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
         nodes = nodes + walk_tree(filepath, ast_tree)
 
     nodes = [node for node in nodes if node.annotation is not None]
-    print(nodes)
+    #print(nodes)
     feature_types = ""
     #feature_types = set([node.annotation.id for node in nodes])
     #for feature_type in feature_types:
@@ -98,7 +150,9 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = True) -> List[
     for node in ast.walk(tree):
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
-        annotation = _parse_feature_annotation(ast.get_docstring(node))
+        annotation = _parse_feature_annotation_regex(ast.get_docstring(node))
+        #print(annotation)
+
         if isinstance(node, ast.Module):
             name = os.path.basename(basename)
         else:
@@ -110,7 +164,29 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = True) -> List[
     return nodes
 
 
-def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optional[FeatureAnnotation]:
+
+
+def _parse_feature_annotation_regex(docstring: Union[str, List[str], None]) -> Optional[FeatureAnnotation]:
+    """Parse a docstring and return a feature annotation."""
+    list_of_annotation = []
+
+    if docstring is None:
+        return
+    if isinstance(docstring, str):
+        for matches in re.findall(pattern, docstring):
+            annotation = dict()
+            deets = MaturityDetails( matches[8], matches[9], matches[10], matches[11], matches[12], matches[13])
+            annotated = (FeatureAnnotation(matches[0], matches[1], matches[2], matches[3], matches[4], matches[5], matches[6], deets._asdict()))
+            if annotated is not None:
+                list_of_annotation.append(json.dumps(annotated._asdict()))
+    print(list_of_annotation)
+    return(list_of_annotation)
+
+
+
+
+
+def _parse_feature_annotation_ast(docstring: Union[str, List[str], None]) -> Optional[FeatureAnnotation]:
     """Parse a docstring and return a feature annotation."""
     if docstring is None:
         return
@@ -147,12 +223,9 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
 
 
 
+def main():
+    res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
 
-
-
-#def main():
-#    res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
-
-#if __name__ == "__main__":
-#    logging.basicConfig(filename='will.log', level=logging.WARNING)
-#    main()
+if __name__ == "__main__":
+    logging.basicConfig(filename='will.log', level=logging.WARNING)
+    main()
