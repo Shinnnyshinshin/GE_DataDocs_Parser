@@ -15,26 +15,33 @@ MaturityDetails = namedtuple("MaturityDetails", ["api_stability", "implementatio
 FeatureAnnotation = namedtuple("FeatureAnnotation", ["id", "title", "icon", "short_description", "description", "how_to_guide_url", "maturity", "maturity_details"])
 
 
-REGEX_STR = ""
-REGEX_STR += "[ ]*id:(.*)[\n]" # 1
-REGEX_STR += "[ ]*title:(.*)[\n]" # 2
-REGEX_STR += "[ ]*icon:(.*)[\n]" # 3
-REGEX_STR += "[ ]*short_description:(.*)[\n]" # 4
-REGEX_STR += "[ ]*description:(.*)[\n]"# 5
-REGEX_STR += "[ ]*how_to_guide_url:(.*)[\n]"# 6
-REGEX_STR += "[ ]*maturity:(.*)[\n]"# 7
-REGEX_STR += "[ ]*maturity_details:(.*)[\n]"# 8
+FULL_REGEX_MATCH = ""
+FULL_REGEX_MATCH += "[ ]*(id:.*)[\n]" # 1
+FULL_REGEX_MATCH += "[ ]*(title:.*)[\n]" # 2
+FULL_REGEX_MATCH += "[ ]*(icon:.*)[\n]" # 3
+FULL_REGEX_MATCH += "[ ]*(short_description:.*)[\n]" # 4
+FULL_REGEX_MATCH += "[ ]*(description:.*)[\n]"# 5
+FULL_REGEX_MATCH += "[ ]*(how_to_guide_url:.*)[\n]"# 6
+FULL_REGEX_MATCH += "[ ]*(maturity:.*)[\n]"# 7
+FULL_REGEX_MATCH += "[ ]*(maturity_details:.*)[\n]"# 8
+FULL_REGEX_MATCH += "[ ]*(api_stability:.*)[\n]" #9
+FULL_REGEX_MATCH += "[ ]*(implementation_completeness:.*)[\n]" #10
+FULL_REGEX_MATCH += "[ ]*(unit_test_coverage:.*)[\n]" #11
+FULL_REGEX_MATCH += "[ ]*(integration_infrastructure_test_coverage:.*)[\n]" #12
+FULL_REGEX_MATCH += "[ ]*(documentation_completeness:.*)[\n]" #13
+FULL_REGEX_MATCH += "[ ]*(bug_risk:.*)[\n]" #14
 
 
 
-REGEX_STR += "[ ]*api_stability:(.*)[\n]" #9
-REGEX_STR += "[ ]*implementation_completeness:(.*)[\n]" #10
-REGEX_STR += "[ ]*unit_test_coverage:(.*)[\n]" #11
-REGEX_STR += "[ ]*integration_infrastructure_test_coverage:(.*)[\n]" #12
-REGEX_STR += "[ ]*documentation_completeness:(.*)[\n]" #13
-REGEX_STR += "[ ]*bug_risk:(.*)[\n]" #14
+ANNOTATION_REGEX_ONLY = ''
 
-pattern = re.compile(REGEX_STR)
+
+
+maturitydetails_keys = ["api_stability", "implementation_completeness", "unit_test_coverage", "integration_infrastructure_test_coverage", "documentation_completeness", "bug_risk"]
+
+
+
+pattern = re.compile(FULL_REGEX_MATCH)
 
 
 """
@@ -151,7 +158,7 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = True) -> List[
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
         annotation = _parse_feature_annotation_regex(ast.get_docstring(node))
-        #print(annotation)
+        print(annotation)
 
         if isinstance(node, ast.Module):
             name = os.path.basename(basename)
@@ -169,20 +176,40 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = True) -> List[
 def _parse_feature_annotation_regex(docstring: Union[str, List[str], None]) -> Optional[FeatureAnnotation]:
     """Parse a docstring and return a feature annotation."""
     list_of_annotation = []
-
+    id_val = ""
     if docstring is None:
         return
     if isinstance(docstring, str):
         for matches in re.findall(pattern, docstring):
-            annotation = dict()
-            deets = MaturityDetails( matches[8], matches[9], matches[10], matches[11], matches[12], matches[13])
-            annotated = (FeatureAnnotation(matches[0], matches[1], matches[2], matches[3], matches[4], matches[5], matches[6], deets._asdict()))
-            if annotated is not None:
-                list_of_annotation.append(json.dumps(annotated._asdict()))
-    print(list_of_annotation)
+            annotation_dict = dict() # create new dictionary for each match
+            maturity_details_dict = dict()
+            #for key in FeatureAnnotation._fields:
+            # reversed so that we bduilg the MAturityDetails first
+            for matched_line in matches:
+                #print(matched_line)
+                # split matched line_fields
+                matched_line_fields = matched_line.split(":")
+                this_key = matched_line_fields[0].strip()
+                this_val = matched_line_fields[1].strip()
+
+                if this_key == "id":
+                    id_val = this_val
+
+                #temp_maturity = MaturityDetails()
+                if this_key in maturitydetails_keys:
+                    maturity_details_dict[this_key] = this_val
+                elif this_key == "icon": # icon is a special cases
+                    if this_val is "":
+                        annotation_dict[this_key] = f"https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/{id_val}.png"
+                    else:
+                        annotation_dict[this_key] = this_val
+                else:
+                    annotation_dict[this_key] = this_val
+
+            annotation_dict["maturity_details"] = maturity_details_dict
+            if annotation_dict is not None:
+                list_of_annotation.append(annotation_dict)
     return(list_of_annotation)
-
-
 
 
 
