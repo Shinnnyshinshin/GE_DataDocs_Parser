@@ -1,0 +1,4 @@
+python setup.py install # will install a CLI tool called GE_parse
+
+# run using the following command
+GE_parse docstrings parse /Users/work/Development/GE_DataDocs_Parser/test_folder --out="test.log"

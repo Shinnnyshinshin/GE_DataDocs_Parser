@@ -1,6 +1,0 @@
-{
-  "store_backend": {
-    "title": "Backend stores",
-    "description": "Provide connection to storage systems for expectation suites, validation results, data docs, and other Data Context artifacts."
-  }
-}

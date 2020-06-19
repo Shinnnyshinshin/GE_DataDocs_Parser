@@ -7,14 +7,33 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-ANNOTATION_KEY = "Feature: "
+ANNOTATION_KEY = "id:"
 
 # -> is named Summary
 # Expectation Completeness is missing
-FeatureAnnotation = namedtuple("FeatureAnnotation", ["Feature", "Summary", "API_Stability", "Implementation_Completeness", "Unit_Test_Coverage", "Infrastructure_Coverage","Documentation_Completeness","Bug_Risk"])
+FeatureAnnotation = namedtuple("FeatureAnnotation", ["id", "title", "icon", "short_description", "description", "how_to_guide_url", "maturity", "maturity_details"])
+
+"""
+    id: expectations_store_git
+    title: Expectation Store - Git
+    icon:
+    short_description:
+    description:
+    how_to_guide_url:
+    maturity: Production
+    maturity_details:
+        api_stability: Stable
+        implementation_completeness: Complete
+        unit_test_coverage: Complete
+        integration_infrastructure_test_coverage: N/A
+        documentation_completeness: Complete
+        bug_risk: Low
+"""
+
+
 AnnotatedNode = namedtuple("AnnotatedNode", ["name", "path", "annotation", "type_", "id"])
-AnnotatedEdge = namedtuple("AnnotatedEdge", ["id_1", "id_2", "annotation"])
-EdgeAnnotation = namedtuple("EdgeAnnotation", ["edge_type"])
+#AnnotatedEdge = namedtuple("AnnotatedEdge", ["id_1", "id_2", "annotation"])
+#EdgeAnnotation = namedtuple("EdgeAnnotation", ["edge_type"])
 
 def build_annotations(path: str) -> Mapping[str, Mapping]:
 
@@ -26,6 +45,10 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
         }
     }
 
+
+
+
+
     nodes = []
     logger.info(f"working through path {path}")
     path = os.path.abspath(path)
@@ -35,9 +58,9 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
         nodes = nodes + walk_tree(filepath, ast_tree)
 
     nodes = [node for node in nodes if node.annotation is not None]
-
-    feature_types = set([node.annotation.Feature for node in nodes])
-    print(feature_types)
+    print(nodes)
+    feature_types = ""
+    #feature_types = set([node.annotation.id for node in nodes])
     #for feature_type in feature_types:
     #   if feature_type not in annotation_tree:
     #        annotation_tree[feature_type] = dict()
@@ -86,6 +109,7 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = True) -> List[
             nodes.append(AnnotatedNode(name, basename, annotation, type(node).__name__, name))
     return nodes
 
+
 def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optional[FeatureAnnotation]:
     """Parse a docstring and return a feature annotation."""
     if docstring is None:
@@ -95,17 +119,21 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
     in_annotation = False
     annotation = dict()
     for line in docstring:
-        if in_annotation and line.strip() == "":
+        line = line.lstrip()
+        if in_annotation and line == "":
+
             in_annotation = False
-        elif line[0:9] == ANNOTATION_KEY:
+            if len(annotation) > 0:
+                yield FeatureAnnotation(**annotation)
+
+        elif line[0:3] == ANNOTATION_KEY:
             logger.debug("Found annotation")
             in_annotation = True
-        # ALL THE KEYS ARE HANDLED : THE -> is handled as "Summary"
+
         if in_annotation:
             line_fields = line.split(":", 1)
             for key in FeatureAnnotation._fields:
-                #print(key)
-                if line_fields[0].replace(" ", "_") == key:
+                if line_fields[0] == key:
                     try:
                         annotation[key] = line_fields[1].strip()
                     except IndexError:
@@ -117,5 +145,14 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]) -> Optiona
                         except IndexError:
                             logger.warning(f"Found annotation with key {key}, but no value.")
 
-    if len(annotation) > 0:
-        return FeatureAnnotation(**annotation)
+
+
+
+
+
+#def main():
+#    res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
+
+#if __name__ == "__main__":
+#    logging.basicConfig(filename='will.log', level=logging.WARNING)
+#    main()
