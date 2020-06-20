@@ -49,6 +49,7 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
 
     for node in nodes:
         print(node)
+        print("--------")
     feature_types = ""
     return feature_types
 
@@ -74,7 +75,7 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List
     for node in ast.walk(tree):
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
-        annotation = _parse_feature_annotation_regex(ast.get_docstring(node))
+        annotation = _parse_feature_annotation(ast.get_docstring(node))
 
         if isinstance(node, ast.Module):
             name = os.path.basename(basename)
@@ -89,14 +90,14 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List
     return nodes
 
 
-def _parse_feature_annotation_regex(docstring: Union[str, List[str], None]) -> Dict[str:str]:
+def _parse_feature_annotation(docstring: Union[str, List[str], None]):
     """Parse a docstring and return a feature annotation."""
     list_of_annotations = []
     id_val = ""
     if docstring is None:
         return
     if isinstance(docstring, str):
-        for matches in re.findall(pattern, docstring):
+        for matches in re.findall(annotation_regex_compiled, docstring):
             annotation_dict = dict() # create new dictionary for each match
             maturity_details_dict = dict()
             for matched_line in matches:
@@ -108,7 +109,7 @@ def _parse_feature_annotation_regex(docstring: Union[str, List[str], None]) -> D
                 if this_key == "id":
                     id_val = this_val
 
-                if this_key in maturitydetails_keys:
+                if this_key in maturity_details_keys:
                     maturity_details_dict[this_key] = this_val
                 elif this_key == "icon": # icon is a special cases
                     if this_val is "":
@@ -120,13 +121,13 @@ def _parse_feature_annotation_regex(docstring: Union[str, List[str], None]) -> D
 
             annotation_dict["maturity_details"] = maturity_details_dict
             if annotation_dict is not None:
-                list_of_annotation.append(annotation_dict)
+                list_of_annotations.append(annotation_dict)
     return(list_of_annotations)
 
 
-def main():
-    res = build_annotations("/Users/work/Development/great_expectations")
+#def main():
+#    res = build_annotations("/Users/work/Development/great_expectations")
 
-if __name__ == "__main__":
-    logging.basicConfig(filename='will.log', level=logging.WARNING)
-    main()
+#if __name__ == "__main__":
+#    logging.basicConfig(filename='will.log', level=logging.WARNING)
+#    main()
