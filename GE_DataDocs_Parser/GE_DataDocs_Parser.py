@@ -8,7 +8,6 @@ import json
 
 logger = logging.getLogger(__name__)
 
-
 ANNOTATION_REGEX = ""
 ANNOTATION_REGEX += "[ ]*(id:.*)[\n]"
 ANNOTATION_REGEX += "[ ]*(title:.*)[\n]"
@@ -50,8 +49,8 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
     for node in nodes:
         print(node)
         print("--------")
-    feature_types = ""
-    return feature_types
+    #feature_types = ""
+    return nodes
 
 
 def walk_directory(path: str) -> Iterator[ast.AST]:
