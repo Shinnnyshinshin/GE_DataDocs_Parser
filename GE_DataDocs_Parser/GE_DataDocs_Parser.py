@@ -46,9 +46,9 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
     for filepath, ast_tree in directory_iter:
         nodes = nodes + walk_tree(filepath, ast_tree)
 
-    for node in nodes:
-        print(node)
-        print("--------")
+    #for node in nodes:
+    #    print(node)
+    #    print("--------")
     #feature_types = ""
     return nodes
 
@@ -75,6 +75,7 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
         annotation = _parse_feature_annotation(ast.get_docstring(node))
+        print(annotation)
 
         if isinstance(node, ast.Module):
             name = os.path.basename(basename)
@@ -90,6 +91,7 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List
 
 
 def _parse_feature_annotation(docstring: Union[str, List[str], None]):
+    print("HI WILL")
     """Parse a docstring and return a feature annotation."""
     list_of_annotations = []
     id_val = ""
@@ -124,9 +126,97 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
     return(list_of_annotations)
 
 
-#def main():
-#    res = build_annotations("/Users/work/Development/great_expectations")
 
-#if __name__ == "__main__":
-#    logging.basicConfig(filename='will.log', level=logging.WARNING)
-#    main()
+
+
+
+def main():
+    docstring = """
+    An Expectations Store provides a way to store Expectation Suites accessible to a Data Context.
+
+    .. admonition:: Feature Maturity
+
+        id: expectations_store_git
+        title: Expectation Store - Git
+        icon:
+        short_description:
+        description:
+        how_to_guide_url:
+        maturity: Production
+        maturity_details:
+            api_stability: Stable
+            implementation_completeness: Complete
+            unit_test_coverage: Complete
+            integration_infrastructure_test_coverage: N/A
+            documentation_completeness: Complete
+            bug_risk: Low
+
+        id: expectations_store_filesystem
+        title: Expectation Store - Filesystem
+        icon:
+        short_description:
+        description:
+        how_to_guide_url:
+        maturity: Production
+        maturity_details:
+            api_stability: Stable
+            implementation_completeness: Complete
+            unit_test_coverage: Complete
+            integration_infrastructure_test_coverage: N/A
+            documentation_completeness: Complete
+            bug_risk: Low
+
+        id: expectations_store_s3
+        title: Expectation Store - S3
+        icon:
+        short_description:
+        description:
+        how_to_guide_url:
+        maturity: Beta
+        maturity_details:
+            api_stability: Stable
+            implementation_completeness: Complete
+            unit_test_coverage: Complete
+            integration_infrastructure_test_coverage: Minimal
+            documentation_completeness: Complete
+            bug_risk: Low
+
+        id: expectations_store_gcs
+        title: Expectation Store - GCS
+        icon:
+        short_description:
+        description:
+        how_to_guide_url:
+        maturity: Beta
+        maturity_details:
+            api_stability: Stable
+            implementation_completeness: Complete
+            unit_test_coverage: Complete
+            integration_infrastructure_test_coverage: Minimal
+            documentation_completeness: Partial
+            bug_risk: Low
+
+        id: expectations_store_azure_blob_storage
+        title: Expectation Store - Azure
+        icon:
+        short_description:
+        description:
+        how_to_guide_url:
+        maturity: N/A
+        maturity_details:
+            api_stability: Stable
+            implementation_completeness: Minimal
+            unit_test_coverage: Minimal
+            integration_infrastructure_test_coverage: Minimal
+            documentation_completeness: Minimal
+            bug_risk: Moderate
+        """
+
+    annotation = _parse_feature_annotation(docstring)
+    print(annotation)
+
+    #res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
+
+if __name__ == "__main__":
+    logging.basicConfig(filename='will.log', level=logging.WARNING)
+    main()
