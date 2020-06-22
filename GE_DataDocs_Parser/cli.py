@@ -24,6 +24,8 @@ def annotations_build(path, out):
     """
     annotations = build_annotations(path)
     if out is None:
+        #for node in annotations:
+        #    print(node)
         print(json.dumps(annotations, indent=2))
     else:
         with open(out, "w") as outfile:

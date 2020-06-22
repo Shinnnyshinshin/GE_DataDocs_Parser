@@ -39,6 +39,7 @@ def build_annotations(path: str) -> Mapping[str, Mapping]:
     }
 
     nodes = []
+    print(f"working through path {path}")
     logger.info(f"working through path {path}")
     path = os.path.abspath(path)
     directory_iter = walk_directory(path) # iterator(filepath of python file, ast object)
@@ -74,8 +75,8 @@ def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List
     for node in ast.walk(tree):
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
-        annotation = _parse_feature_annotation(ast.get_docstring(node))
 
+        annotation = _parse_feature_annotation(ast.get_docstring(node))
         if isinstance(node, ast.Module):
             name = os.path.basename(basename)
         else:
@@ -97,6 +98,8 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
         return
     if isinstance(docstring, str):
         for matches in re.findall(annotation_regex_compiled, docstring):
+            print(docstring)
+
             annotation_dict = dict() # create new dictionary for each match
             maturity_details_dict = dict()
             for matched_line in matches:
@@ -129,7 +132,9 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
 
 
 #def main():
-#    res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
+    #res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
+#    res = build_annotations("/Users/work/Development/great_expectations")
+
 
 #if __name__ == "__main__":
 #    logging.basicConfig(filename='will.log', level=logging.WARNING)
