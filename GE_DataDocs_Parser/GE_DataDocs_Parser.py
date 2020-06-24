@@ -1,10 +1,9 @@
 import ast
 import json
-import re
-import os
-from typing import Iterator, Optional, Union, List, Mapping, Tuple, Set, Dict
 import logging
-
+import os
+import re
+from typing import Iterator, Union, List, Dict
 
 logger = logging.getLogger(__name__)
 
@@ -27,19 +26,18 @@ annotation_regex_compiled = re.compile(ANNOTATION_REGEX)
 
 maturity_details_keys = ["api_stability", "implementation_completeness", "unit_test_coverage", "integration_infrastructure_test_coverage", "documentation_completeness", "bug_risk"]
 
-# stored as global
-full_annotation = {}
+# global dictionary for all annotations that already exist in DataDocs
+full_annotation = Dict[str, str]
+
 
 def build_annotations(folder_to_annotate: str, in_json: str):
+    """ Entry-point into parser script. Will return the results of process_toc, whichi """
     build_full_annotation_dict(folder_to_annotate)
     return process_toc(in_json)
 
-# helper method for testing
-def _test_json_integrity(toc: str):
-    with open(toc) as json_file:
-        data = json.load(json_file)
 
-def process_toc(in_json: str, out_json: str):
+
+def process_toc(in_json: str):
     with open(in_json) as json_file:
         data = json.load(json_file)
         for title in data:
@@ -50,18 +48,15 @@ def process_toc(in_json: str, out_json: str):
                         all_cases[index] = full_annotation[all_cases[index]["id"]]
                 section_features["cases"] = all_cases
     return data
-    #with open(out_json, 'w') as file:
-    #    json.dump(data, file, indent=2)
 
-def build_full_annotation_dict(path: str):
-    all_annotations = {} # full dictionary
-    print(f"working through path {path}")
+
+def build_full_annotation_dict(path: str) -> Dict[str, str]:
     logger.info(f"working through path {path}")
     path = os.path.abspath(path)
     directory_iter = walk_directory(path) # iterator(filepath of python file, ast object)
     for filepath, ast_tree in directory_iter:
         walk_tree(filepath, ast_tree)
-    return(full_annotation)
+    return full_annotation
 
 
 def walk_directory(path: str) -> Iterator[ast.AST]:
@@ -98,7 +93,6 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
         return
     if isinstance(docstring, str):
         for matches in re.findall(annotation_regex_compiled, docstring):
-            #print(docstring)
             annotation_dict = dict() # create new dictionary for each match
             maturity_details_dict = dict()
             for matched_line in matches:
@@ -112,7 +106,7 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
 
                 if this_key in maturity_details_keys:
                     maturity_details_dict[this_key] = this_val
-                elif this_key == "icon": # icon is a special cases
+                elif this_key == "icon": # icon is a special case
                     if this_val is "":
                         annotation_dict[this_key] = f"https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/{id_val}.png"
                     else:
@@ -124,12 +118,3 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
             if annotation_dict is not None:
                 list_of_annotations.append(annotation_dict)
     return(list_of_annotations)
-
-#def main():
-    #test_json_integrity("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/output_json_feature_maturity_grid_20200623.json")
-    #test_json_integrity("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/output_json_feature_maturity_grid_202006230_withFilledData.json")
-    #populate_dict = build_annotations("/Users/work/Development/great_expectations")
-    #res = read_toc("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/toc.json")
-#if __name__ == "__main__":
-#    logging.basicConfig(filename='will.log', level=logging.WARNING)
-#    main()

@@ -9,22 +9,17 @@ from .GE_DataDocs_Parser import build_annotations
 def cli():
     pass
 
-
-@cli.group()
-def docstrings():
-    pass
-
-@docstrings.command(name='parse')
+@cli.command(name='parse')
 @click.argument('path', type=click.Path(exists=True))
-@click.option('--injson', type=click.Path(exists=False))
+@click.argument('injson', type=click.Path(exists=True))
 @click.option('--out', default=None, type=click.Path(exists=False),
               help='The file to which to save the resulting annotations json.')
-def annotations_build(path, in_json, out):
-    """Build annotations from a python project.
-        PATH: the root directory from which to parse the project
-        WILL HI 
+def annotations_build(path, injson, out):
+    """Build annotations from a python project.\n
+        PATH: the root directory from which to parse the project\n
+        INJSON: json file that will serve as the scaffold for the feature maturity grid
     """
-    annotations = build_annotations(path, in_json)
+    annotations = build_annotations(path, injson)
     if out is None:
         print(json.dumps(annotations, indent=2))
     else:
