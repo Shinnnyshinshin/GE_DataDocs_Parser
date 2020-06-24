@@ -30,10 +30,9 @@ maturity_details_keys = ["api_stability", "implementation_completeness", "unit_t
 # stored as global
 full_annotation = {}
 
-
-def build_annotations(folder_to_annotate: str, in_json: str, out_json: str):
+def build_annotations(folder_to_annotate: str, in_json: str):
     build_full_annotation_dict(folder_to_annotate)
-    process_toc(in_json, out_json)
+    return process_toc(in_json)
 
 # helper method for testing
 def _test_json_integrity(toc: str):
@@ -50,8 +49,9 @@ def process_toc(in_json: str, out_json: str):
                     if all_cases[index]["id"] in full_annotation.keys():
                         all_cases[index] = full_annotation[all_cases[index]["id"]]
                 section_features["cases"] = all_cases
-    with open(out_json, 'w') as file:
-        json.dump(data, file, indent=2)
+    return data
+    #with open(out_json, 'w') as file:
+    #    json.dump(data, file, indent=2)
 
 def build_full_annotation_dict(path: str):
     all_annotations = {} # full dictionary

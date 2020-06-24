@@ -1,4 +1,7 @@
 python setup.py install # will install a CLI tool called GE_parse
 
 # run using the following command
-GE_parse docstrings parse /Users/work/Development/GE_DataDocs_Parser/test_folder
+GE_parse docstrings parse /Users/work/Development/great_expectations/great_expectations /Users/work/Development/GE_DataDocs_Parser/data/toc.json
+
+
+GE_parse docstrings parse /Users/work/Development/great_expectations/great_expectations --in_json=/Users/work/Development/GE_DataDocs_Parser/data/toc.json

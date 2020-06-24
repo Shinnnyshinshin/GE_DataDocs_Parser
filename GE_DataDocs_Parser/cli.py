@@ -16,21 +16,20 @@ def docstrings():
 
 @docstrings.command(name='parse')
 @click.argument('path', type=click.Path(exists=True))
+@click.option('--injson', type=click.Path(exists=False))
 @click.option('--out', default=None, type=click.Path(exists=False),
               help='The file to which to save the resulting annotations json.')
-def annotations_build(path, out):
+def annotations_build(path, in_json, out):
     """Build annotations from a python project.
         PATH: the root directory from which to parse the project
+        WILL HI 
     """
-    annotations = build_annotations(path)
+    annotations = build_annotations(path, in_json)
     if out is None:
-        #for node in annotations:
-        #    print(node)
         print(json.dumps(annotations, indent=2))
     else:
         with open(out, "w") as outfile:
             json.dump(annotations, outfile, indent=2)
-
 
 def main():
     cli()
