@@ -1,0 +1,339 @@
+[
+  {
+    "section_title": "Infrastructure",
+    "section_features": [
+      {
+        "title": "Where is your data stored?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "id": "datasource_filesystem"
+            "title": "filesystem",
+            "icon": "a url",
+            "short_description": "",
+            "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+            "maturity": "production",
+            "github_url": "optional",
+            "github_issues_url": "optional - with search params",
+            "discuss_url": "optional - with search params",
+            "how_to_guide_url": "optional"
+          },
+          {
+            "id": "datasource_s3"
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "datasource_gcs"
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "datasource_azure_blob_storage"
+            "title": "Azure",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "future"
+          },
+          {
+            "id": "datasource_postgreql"
+            "title": "Postgresql",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "beta"
+          },
+          {
+            "id": "datasource_bigquery"
+            "title": "BigQuery",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_redshift"
+            "title": "Redshift",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_snowflake"
+            "title": "Snowflake",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mssql"
+            "title": "MSSQL",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mysql"
+            "title": "MySQL",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mariadb"
+            "title": "MariaDB",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_hdfs"
+            "title": "HDFS",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          }
+        ]
+      },
+      {
+        "title": "What computation engine(s) do you want to use for validation?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "Pandas",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "PySpark",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Databricks",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "EMR Spark",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "future"
+          },
+          {
+            "title": "SQL Databases (via SQLAlchemy)",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "beta"
+          }
+        ]
+      },
+      {
+        "title": "Where do you want to store and share your expectations?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "git",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "filesystem",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Azure",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "Where do you want to store validation results?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "filesystem",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Azure",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "How do you want to host and share your Data Documentation?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "filesystem",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Azure",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "How do you want to trigger validation?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "From a preconfigured notebook",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "From the command line",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "From a cron job",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Within an Airflow DAG",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "Within Kedro",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "Within Prefect",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "From within a dbt DAG",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "Adjacent to a dbt DAG",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "From another pipeline runner",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section_title": "Workflow",
+    "section_features": [
+      {
+        "title": "How do you want to create and edit Expectations?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "Sample profiler + column selector",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Out of the box CLI + generated notebook",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Edit JSON by hand",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          }
+        ]
+      },
+      {
+        "title": "What would you want to do after validating data?",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "Review Validation Results in a notebook",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Adjust Expectations in response to new Validation",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Fix data problems",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Send a Slack notification",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "Save snippets of failed results as examples for future testing",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "title": "Quarantine failed results",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "Other",
+        "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+        "cases": [
+          {
+            "title": "Configure your Expectations and ValidationOperators to handle warnings and errors",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Create custom renderers",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "title": "Add custom styling to your Data Documentation",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          }
+        ]
+      }
+    ]
+  }
+]

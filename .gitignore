@@ -1,5 +1,5 @@
 codemap-master/
-DataDocsParse_env/
+GE_DataDocs_Parser_env/
 build/
 DataDocs_Parser.egg-info/
 dist/

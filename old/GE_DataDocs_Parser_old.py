@@ -1,10 +1,10 @@
 import ast
-import json
-import re
 import os
+from collections import namedtuple
+import re
 from typing import Iterator, Optional, Union, List, Mapping, Tuple, Set, Dict
 import logging
-
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -27,41 +27,53 @@ annotation_regex_compiled = re.compile(ANNOTATION_REGEX)
 
 maturity_details_keys = ["api_stability", "implementation_completeness", "unit_test_coverage", "integration_infrastructure_test_coverage", "documentation_completeness", "bug_risk"]
 
-# stored as global
-full_annotation = {}
+AnnotatedNode = namedtuple("AnnotatedNode", ["name", "path", "annotation"])
 
 
-def build_annotations(folder_to_annotate: str, in_json: str, out_json: str):
-    build_full_annotation_dict(folder_to_annotate)
-    process_toc(in_json, out_json)
 
-# helper method for testing
-def _test_json_integrity(toc: str):
+
+def _process()
+
+
+
+def read_toc(toc: str):
     with open(toc) as json_file:
         data = json.load(json_file)
 
-def process_toc(in_json: str, out_json: str):
-    with open(in_json) as json_file:
-        data = json.load(json_file)
         for title in data:
-            for section_features in title["section_features"]:
-                all_cases = section_features["cases"]
-                for index in range(len(all_cases)):
-                    if all_cases[index]["id"] in full_annotation.keys():
-                        all_cases[index] = full_annotation[all_cases[index]["id"]]
-                section_features["cases"] = all_cases
-    with open(out_json, 'w') as file:
-        json.dump(data, file, indent=2)
+            print("-----------")
+            #print(title)
 
-def build_full_annotation_dict(path: str):
-    all_annotations = {} # full dictionary
+            for section_features in title["section_features"]:
+                for case in section_features["cases"]:
+
+                    print("++++++++++++++++++++")
+                    print(case)
+                function()
+                function()
+                function()
+
+                    * visual clutter
+                    *
+
+def build_annotations(path: str) -> Mapping[str, Mapping]:
+    annotation_tree = {
+        "store_backend": {
+            "title": "Backend stores",
+            "description": "Provide connection to storage systems for expectation suites, validation results, " \
+                           "data docs, and other Data Context artifacts."
+        }
+    }
+
+    nodes = []
     print(f"working through path {path}")
     logger.info(f"working through path {path}")
     path = os.path.abspath(path)
     directory_iter = walk_directory(path) # iterator(filepath of python file, ast object)
+
     for filepath, ast_tree in directory_iter:
-        walk_tree(filepath, ast_tree)
-    return(full_annotation)
+        nodes = nodes + walk_tree(filepath, ast_tree)
+    return nodes
 
 
 def walk_directory(path: str) -> Iterator[ast.AST]:
@@ -78,16 +90,25 @@ def walk_directory(path: str) -> Iterator[ast.AST]:
                 yield os.path.relpath(filepath, path), ast.parse(srcfile.read())
 
 
-def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False):
-    """Parse AST tree, generating dictionary of annotations"""
+def walk_tree(basename: str, tree: ast.AST, include_empty: bool = False) -> List[AnnotatedNode]:
+    """Parse AST tree, generating nodes and edges."""
+    nodes = []
     annotation = []
     for node in ast.walk(tree):
         if not isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef)):
             continue
+
         annotation = _parse_feature_annotation(ast.get_docstring(node))
-        if annotation:
-            for annot in annotation:
-                full_annotation[annot["id"]] = annot
+        if isinstance(node, ast.Module):
+            name = os.path.basename(basename)
+        else:
+            name = node.name
+        if name.endswith(".py"):
+            name = name[:-3]
+
+        if annotation is not None and len(annotation) > 0 or include_empty:
+            nodes.append(AnnotatedNode(name, basename, annotation))
+    return nodes
 
 
 def _parse_feature_annotation(docstring: Union[str, List[str], None]):
@@ -98,7 +119,8 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
         return
     if isinstance(docstring, str):
         for matches in re.findall(annotation_regex_compiled, docstring):
-            #print(docstring)
+            print(docstring)
+
             annotation_dict = dict() # create new dictionary for each match
             maturity_details_dict = dict()
             for matched_line in matches:
@@ -125,11 +147,18 @@ def _parse_feature_annotation(docstring: Union[str, List[str], None]):
                 list_of_annotations.append(annotation_dict)
     return(list_of_annotations)
 
-#def main():
-    #test_json_integrity("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/output_json_feature_maturity_grid_20200623.json")
-    #test_json_integrity("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/output_json_feature_maturity_grid_202006230_withFilledData.json")
-    #populate_dict = build_annotations("/Users/work/Development/great_expectations")
+
+
+
+
+
+def main():
+    res = build_annotations("/Users/work/Development/GE_DataDocs_Parser/test_folder")
+    #res = build_annotations("/Users/work/Development/great_expectations")
     #res = read_toc("/Users/work/Development/GE_DataDocs_Parser/GE_DataDocs_Parser/toc.json")
-#if __name__ == "__main__":
-#    logging.basicConfig(filename='will.log', level=logging.WARNING)
-#    main()
+
+
+
+if __name__ == "__main__":
+    logging.basicConfig(filename='will.log', level=logging.WARNING)
+    main()

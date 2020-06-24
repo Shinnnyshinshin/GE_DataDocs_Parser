@@ -1,0 +1,641 @@
+[
+  {
+    "section_title": "Infrastructure",
+    "section_features": [
+      {
+        "title": "Where is your data stored?",
+        "description": "A [Datasource](https://docs.greatexpectations.io/en/latest/reference/core_concepts/datasource.html), facilitates access for Great Expectations to data to be validated.",
+        "id": "datasource",
+        "cases": [
+          {
+            "id": "datasource_filesystem",
+            "title": "filesystem",
+            "icon": "a url",
+            "short_description": "",
+            "description": "Non sit sit labore sed eius adipisci. Velit sit labore eius voluptatem etincidunt consectetur ipsum. Sed eius ut aliquam eius amet consectetur. Quiquia adipisci eius quiquia dolorem tempora non est. Quiquia consectetur eius dolor amet. Quiquia adipisci consectetur porro magnam sit labore. Magnam eius etincidunt ipsum ut etincidunt numquam dolorem. Sit sed etincidunt sit porro. Tempora quisquam velit adipisci voluptatem sit. Adipisci tempora porro velit labore numquam porro aliquam.",
+            "maturity": "production",
+            "github_url": "optional",
+            "github_issues_url": "optional - with search params",
+            "discuss_url": "optional - with search params",
+            "how_to_guide_url": "optional"
+          },
+          {
+            "id": "datasource_s3",
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "datasource_gcs",
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "datasource_azure_blob_storage",
+            "title": "Azure",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "future"
+          },
+          {
+            "id": "datasource_postgreql",
+            "title": "Postgresql",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "beta"
+          },
+          {
+            "id": "datasource_bigquery",
+            "title": "BigQuery",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_redshift",
+            "title": "Redshift",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_snowflake",
+            "title": "Snowflake",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mssql",
+            "title": "MSSQL",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mysql",
+            "title": "MySQL",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_mariadb",
+            "title": "MariaDB",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          },
+          {
+            "id": "datasource_hdfs",
+            "title": "HDFS",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "experimental"
+          }
+        ]
+      },
+      {
+        "title": "What batch kwargs generators do you want to use?",
+        "description": "A Batch Kwargs Generator provides an interface for interacting with a datasource to introspect it and slice data into logical batches.",
+        "id": "batch_kwargs_generator",
+        "cases": [
+          {
+            "id": "batch_kwargs_generator_manual"
+          },
+          {
+            "id": "batch_kwargs_s3"
+          },
+          {
+            "id": "batch_kwargs_glob_reader"
+          },
+          {
+            "id": "batch_kwargs_generator_table"
+          },
+          {
+            "id": "batch_kwargs_generator_query"
+          },
+          {
+            "id": "batch_kwargs_generator_subdir_reader"
+          }
+        ]
+      },
+      {
+        "title": "What validation engine(s) do you want to use?",
+        "description": "A [Validation Engine](https://docs.greatexpectations.io/en/latest/reference/core_concepts/validation_engine.html) provides the compute resources necessary to evaluate expectations on raw data as provided by a data connection.",
+        "id": "validation_engine",
+        "cases": [
+          {
+            "id": "validation_engine_pandas",
+            "title": "Validation Engine - Pandas",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validation_engine_pandas.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Production",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A -> see relevant Datasource evaluation",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "validation_engine_pyspark_self_managed",
+            "title": "Validation Engine - pyspark - Self-Managed",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validation_engine_pyspark_self_managed.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Production",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Moderate",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A -> see relevant Datasource evaluation",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low/Moderate"
+            }
+          },
+          {
+            "id": "validation_engine_databricks",
+            "title": "Validation Engine - Databricks",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validation_engine_databricks.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Low [dbfs-specific handling]",
+              "unit_test_coverage": "N/A -> implementation not different",
+              "integration_infrastructure_test_coverage": "We've tested a bit, know others have used it",
+              "documentation_completeness": "Moderate (need docs on managing project configuration via dbfs/etc.)",
+              "bug_risk": "Low/Moderate"
+            }
+          },
+          {
+            "id": "validation_engine_emr_spark",
+            "title": "Validation Engine - EMR - Spark",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validation_engine_emr_spark.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Experimental",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Low (need to provide guidance on \"known good\" paths, and we know there are many \"knobs\" to tune that we have not explored/tested)",
+              "unit_test_coverage": "N/A -> implementation not different",
+              "integration_infrastructure_test_coverage": "Unknown / Rumor",
+              "documentation_completeness": "Low (must install specific/latest version but do not have docs to that effect or of known useful paths)",
+              "bug_risk": "Low/Moderate"
+            }
+          },
+          {
+            "id": "validation_engine_spark_other",
+            "title": "Validation Engine - Spark - Other",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validation_engine_spark_other.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Experimental",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "\"other\" means we haven't even tested possibility (e.g. known glue deployment)",
+              "unit_test_coverage": "N/A -> implementation not different",
+              "integration_infrastructure_test_coverage": "Unknown / Rumor",
+              "documentation_completeness": "Low (must install specific/latest version but do not have docs to that effect or of known useful paths)",
+              "bug_risk": "Low/Moderate"
+            }
+          },
+          {
+            "id": "validation_engine_sqlalchemy",
+            "title": "SQL Databases (via SQLAlchemy)",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "beta"
+          }
+        ]
+      },
+      {
+        "title": "Where do you want to store and share your expectations?",
+        "description": "An [Expectations Store](https://docs.greatexpectations.io/en/latest/reference/core_concepts/data_context.html#expectations_store) provides a way to store Expectation Suites accessible to a Data Context.",
+        "id": "expectations_store",
+        "cases": [
+          {
+            "id": "expectations_store_git",
+            "title": "Expectation Store - Git",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/expectations_store_git.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Production",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "expectations_store_filesystem",
+            "title": "Expectation Store - Filesystem",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/expectations_store_filesystem.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Production",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "expectations_store_s3",
+            "title": "Expectation Store - S3",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/expectations_store_s3.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "expectations_store_gcs",
+            "title": "Expectation Store - GCS",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/expectations_store_gcs.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Partial",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "expectations_store_azure_blob_storage",
+            "title": "Expectation Store - Azure",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/expectations_store_azure_blob_storage.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "N/A",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Minimal",
+              "unit_test_coverage": "Minimal",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Minimal",
+              "bug_risk": "Moderate"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Where do you want to store validation results?",
+        "description": "A [Validations Store](https://docs.greatexpectations.io/en/latest/reference/core_concepts/data_context.html#validations_store) manages Validation Results to ensure they are accessible via a Data Context for review and rendering into Data Docs.",
+        "id": "validations_store",
+        "cases": [
+          {
+            "id": "validations_store_git"
+          },
+          {
+            "id": "validations_store_filesystem",
+            "title": "Validations Store - Filesystem",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validations_store_filesystem.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Production",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "validations_store_s3",
+            "title": "Validations Store - S3",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validations_store_s3.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "validations_store_gcs",
+            "title": "Validations Store - GCS",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validations_store_gcs.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Partial",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "validations_store_azure_blob_storage",
+            "title": "Validations Store - Azure",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/validations_store_azure_blob_storage.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "N/A",
+            "maturity_details": {
+              "api_stability": "Stable",
+              "implementation_completeness": "Minimal",
+              "unit_test_coverage": "Minimal",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Minimal",
+              "bug_risk": "Moderate"
+            }
+          }
+        ]
+      },
+      {
+        "title": "How do you want to host and share your Data Documentation?",
+        "description": "A [Data Docs Store](https://docs.greatexpectations.io/en/latest/reference/core_concepts/data_context.html#data_docs_store) facilitates publishing rendered documentation built from Expectation Suites, Profiling Results, and Validation Results",
+        "id": "data_docs_store",
+        "cases": [
+          {
+            "id": "data_docs_store_git",
+            "title": "git",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "data_docs_store_filesystem",
+            "title": "filesystem",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "data_docs_store_s3",
+            "title": "S3",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "data_docs_store_gcs",
+            "title": "GCS",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "data_docs_store_azure_blob_storage",
+            "title": "Azure",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "How do you want to trigger validation?",
+        "description": "A [Checkpoint](https://docs.greatexpectations.io/en/latest/reference/core_concepts/checkpoint.html) makes it possible to easily integrate a validation step into your workflow.",
+        "id": "checkpoint",
+        "cases": [
+          {
+            "id": "checkpoint_notebook",
+            "title": "Checkpoint - Notebook",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/checkpoint_notebook.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Experimental",
+            "maturity_details": {
+              "api_stability": "Unstable - expect changes to batch definition; \"assets to validate\" is still totally untyped",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Partial \"golden path\"-focused tests (error checking tests need to be improved)",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "checkpoint_command_line",
+            "title": "Checkpoint - Command Line",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/checkpoint_command_line.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Experimental",
+            "maturity_details": {
+              "api_stability": "Unstable - expect changes to batch definition; no checkpoint store)",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "checkpoint_cron_job",
+            "title": "Checkpoint - Cron",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/checkpoint_cron_job.png",
+            "short_description": "",
+            "description": "",
+            "how_to_guide_url": "",
+            "maturity": "Experimental",
+            "maturity_details": {
+              "api_stability": "Unstable (expect changes to batch validation; no checkpoint store)",
+              "implementation_completeness": "Complete",
+              "unit_test_coverage": "Complete",
+              "integration_infrastructure_test_coverage": "N/A",
+              "documentation_completeness": "Complete",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "checkpoint_airflow_dag",
+            "title": "Checkpoint - Airflow DAG",
+            "icon": "https://great-expectations-web-assets.s3.us-east-2.amazonaws.com/feature_maturity_icons/checkpoint_airflow_dag.png",
+            "short_description": "",
+            "description": "Note",
+            "how_to_guide_url": "",
+            "maturity": "Beta",
+            "maturity_details": {
+              "api_stability": "Unstable",
+              "implementation_completeness": "Partial [no operator, but probably don't need one]",
+              "unit_test_coverage": "N/A",
+              "integration_infrastructure_test_coverage": "Minimal",
+              "documentation_completeness": "Complete [pending how-to]",
+              "bug_risk": "Low"
+            }
+          },
+          {
+            "id": "checkpoint_kedro",
+            "title": "Within Kedro",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "checkpoint_prefect",
+            "title": "Within Prefect",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "checkpoint_dbt_internal",
+            "title": "From within a dbt DAG",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "checkpoint_dbt_adjacent",
+            "title": "Adjacent to a dbt DAG",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "checkpoint_other",
+            "title": "From another pipeline runner",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "What operating systems do your development team and data infrastructure use?",
+        "description": "Operating system related dependencies and testing are reflected in our assessment of the maturity of support indicated here.",
+        "id": "os",
+        "cases": [
+          {
+            "id": "os_linux"
+          },
+          {
+            "id": "os_macos"
+          },
+          {
+            "id": "os_windows"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section_title": "Workflow",
+    "section_features": [
+      {
+        "title": "How do you want to create and edit Expectations?",
+        "description": "The maturity of documentation and end-to-end support for workflows is reflected in these assessments.",
+        "id": "workflow_create_edit_expectations",
+        "cases": [
+          {
+            "id": "worfklow_create_edit_expectations_cli_scaffold",
+            "title": "Sample profiler + column selector",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "worfklow_create_edit_expectations_cli_new",
+            "title": "Out of the box CLI + generated notebook",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "worfklow_create_edit_expectations_json",
+            "title": "Edit JSON by hand",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          }
+        ]
+      },
+      {
+        "title": "What would you want to do after validating data?",
+        "description": "The maturity of documentation and end-to-end support for workflows is reflected in these assessments.",
+        "id": "workflow_validation_action",
+        "cases": [
+          {
+            "id": "workflow_validation_action_review_in_notebook",
+            "title": "Review Validation Results in a notebook",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "workflow_validation_action_adjust_expectations",
+            "title": "Adjust Expectations in response to new Validation",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "workflow_validation_action_fix_data_problems",
+            "title": "Fix data problems",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "workflow_validation_action_send_slack_notification",
+            "title": "Send a Slack notification",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "workflow_validation_action_save_results_snippets",
+            "title": "Save snippets of failed results as examples for future testing",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          },
+          {
+            "id": "workflow_validation_action_quarantine_failed_results",
+            "title": "Quarantine failed results",
+            "description": "Sed consectetur eius consectetur.",
+            "maturity": "future"
+          }
+        ]
+      },
+      {
+        "title": "Other",
+        "description": "The maturity of documentation and end-to-end support for workflows is reflected in these assessments.",
+        "id": "other",
+        "cases": [
+          {
+            "id": "other_configure_expectations_and_val_ops_to_handle_warnings_and_errors",
+            "title": "Configure your Expectations and ValidationOperators to handle warnings and errors",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "other_create_custom_renderers",
+            "title": "Create custom renderers",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          },
+          {
+            "id": "other_add_custom_styling_to_data_docs",
+            "title": "Add custom styling to your Data Documentation",
+            "description": "Consectetur quaerat dolorem consectetur non sit.",
+            "maturity": "production"
+          }
+        ]
+      }
+    ]
+  }
+]
